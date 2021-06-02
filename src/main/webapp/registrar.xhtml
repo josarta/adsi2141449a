@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>Inicio de sesion</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous"></link>
+    </h:head>
+    <h:body>
+
+        <div class="container-fluid">
+            <div class="row" style="padding-top: 10%">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+
+                    <c:if test="#{usuarioSession.mensajes.equalsIgnoreCase('regOk')}">
+                        <div class="alert alert-success" role="alert">
+                            Registro de ususario satisfactorio !!!!!!
+                        </div>
+                    </c:if>
+
+                    <c:if test="#{usuarioSession.mensajes.equalsIgnoreCase('regBad')}">
+                        <div class="alert alert-danger" role="alert">
+                           Verifique sus datos !!!!!
+                        </div>
+                    </c:if>
+
+                    <h:form id="fmrReg">
+                        <div class="row">
+                            <div class="col">
+                                <h:outputLabel for="fmrTd">Tipo de documento</h:outputLabel>
+                                <h:selectOneMenu value="#{usuarioSession.usuReg.usuTipoDocumento}" class="form-control" id="fmrTd">
+                                    <f:selectItem itemLabel="Cedula" itemValue="Cedula" ></f:selectItem>
+                                    <f:selectItem itemLabel="Tarjeta de identidad" itemValue="Tarjeta de identidad" ></f:selectItem>
+                                    <f:selectItem itemLabel="Cedula de Extrangeria" itemValue="Cedula de Extrangeria" ></f:selectItem>
+                                    <f:selectItem itemLabel="Pasaporte" itemValue="Pasaporte" ></f:selectItem>
+                                    <f:selectItem itemLabel="Otro" itemValue="Otro" ></f:selectItem>
+                                </h:selectOneMenu>
+
+                            </div>
+                            <div class="col">
+                                <h:outputLabel for="fmrDo">Documento</h:outputLabel>
+                                <h:inputText 
+                                    value="#{usuarioSession.usuReg.usuDocumento}"
+                                    maxlength="11"
+                                    required="true"
+                                    requiredMessage="Ingrese un numero de documento"
+                                    class="form-control"
+                                    id="fmrDo" />
+                                <h:message for="fmrDo" style="color: red"></h:message>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col">
+                                <h:outputLabel for="fmrNo">Nombres</h:outputLabel>
+                                <h:inputText 
+                                    value="#{usuarioSession.usuReg.usuNombres}"
+                                    maxlength="30"
+                                    required="true"
+                                    requiredMessage="Ingrese sus nombres"
+                                    class="form-control"
+                                    id="fmrNo" />
+                                <h:message for="fmrNo" style="color: red"></h:message>
+                            </div>
+                            <div class="col">
+                                <h:outputLabel for="fmrAp">Apellidos</h:outputLabel>
+                                <h:inputText 
+                                    value="#{usuarioSession.usuReg.usuApellidos}"
+                                    maxlength="30"
+                                    required="true"
+                                    requiredMessage="Ingrese sus apellidos"
+                                    class="form-control"
+                                    id="fmrAp" />
+                                <h:message for="fmrAp" style="color: red"></h:message>
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="form-group">
+                            <h:outputLabel for="fmrEmail">Correo Electronico</h:outputLabel>
+                            <h:inputText 
+                                value="#{usuarioSession.usuReg.usuCorreo}"
+                                requiredMessage="Por favor ingrese un correo electronico"
+                                maxlength="45"
+                                required="true"
+                                class="form-control" 
+                                id="fmrEmail" />
+                            <h:message for="fmrEmail" style="color: red"></h:message>
+
+                        </div>
+                        <div class="form-group">
+                            <h:outputLabel for="fmrPassword">Clave</h:outputLabel>
+                            <h:inputSecret 
+                                value="#{usuarioSession.usuReg.usuClave}"
+                                maxlength="8"
+                                required="true"
+                                requiredMessage="Por favor ingrese una clave"
+                                class="form-control" id="fmrPassword"/>
+                            <h:message for="fmrPassword" style="color: red"></h:message>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <a href="recuperar.xhtml">¿Olvido su clave?</a>
+                            </div>
+                            <div class="col-md-6">
+                                <a href="index.xhtml">Ya estoy registrado</a>
+                            </div>
+                        </div>
+                        <br/>
+                        <h:commandButton action="#{usuarioSession.registarUsuario()}" class="btn btn-primary" value="Registrar"></h:commandButton>
+                    </h:form>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+    </h:body>
+</html>
+
